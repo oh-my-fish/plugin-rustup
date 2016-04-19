@@ -1,4 +1,7 @@
-set -l rustup_path  "$CARGO_HOME/bin"
+set -l rustup_path $HOME/.cargo/bin
+if test -n $CARGO_HOME
+  set rustup_path "$CARGO_HOME/bin"
+end
 
 contains -- $rustup_path $PATH
   or set -gx PATH $rustup_path $PATH
