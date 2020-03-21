@@ -12,7 +12,7 @@
 ## Install
 
 ```fish
-$ omf install plugin-rustup
+$ omf install rustup
 ```
 
 # License
