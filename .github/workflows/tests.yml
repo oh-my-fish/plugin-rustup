@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install fish (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y fish
+
+      - name: Install fish (macOS)
+        if: runner.os == 'macOS'
+        run: brew install fish
+
+      - name: Install fish-spec
+        run: git clone --depth 1 https://github.com/oh-my-fish/oh-my-fish.git "$HOME/omf"
+
+      - name: Run tests
+        run: fish -c 'source $HOME/omf/pkg/fish-spec/functions/fish-spec.fish; fish-spec'
